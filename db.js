@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     Todo = new Schema({
-        used_id: String,
+        user_id: String,
         content: String,
         updated_at: Date
     });
