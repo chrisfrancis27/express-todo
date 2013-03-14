@@ -11,14 +11,14 @@ exports.index = function(req, res, next) {
   }).sort(
     '-updated_at'
   ).exec(function(err, todos, count) {
-    if ( err ) { return next(err) }
+    if ( err ) { return next(err); }
     
     res.render('index', {
       title : 'Express Todo Example'
     , todos : todos
-    })
-  })
-}
+    });
+  });
+};
 
 /*
  * POST create Todo item.
@@ -29,11 +29,11 @@ exports.create = function(req, res, next) {
   , content     : req.body.content
   , updated_at  : Date.now()
   }).save(function(err, todo, count) {
-    if ( err ) { return next(err) }
+    if ( err ) { return next(err); }
     
-    res.redirect('/')
-  })
-}
+    res.redirect('/');
+  });
+};
 
 /*
  * GET destroy Todo item.
@@ -41,16 +41,16 @@ exports.create = function(req, res, next) {
 exports.destroy = function(req, res, next) {
   Todo.findById(req.params.id, function(err, todo) {
     if (todo.user_id !== req.cookies.user_id) {
-      return utils.forbidden(res)
+      return utils.forbidden(res);
     }
     
     todo.remove(function(err, todo) {
-      if ( err ) { return next(err) }
+      if ( err ) { return next(err); }
       
-      res.redirect('/')
-    })
-  })
-}
+      res.redirect('/');
+    });
+  });
+};
 
 /*
  * GET edit Todo item.
@@ -61,15 +61,15 @@ exports.edit = function(req, res, next) {
   }).sort(
     '-updated_at'
   ).exec(function(err, todos) {
-    if ( err ) { return next(err) }
+    if ( err ) { return next(err); }
     
     res.render('edit', {
       title   : 'Express Todo Example'
     , todos   : todos
     , current : req.params.id
-    })
-  })
-}
+    });
+  });
+};
 
 /*
  * POST update Todo item.
@@ -77,23 +77,23 @@ exports.edit = function(req, res, next) {
 exports.update = function(req, res, next) {
   Todo.findById(req.params.id, function(err, todo) {
     if ( todo.user_id !== req.cookies.user_id ) {
-      return utils.forbidden(res)
+      return utils.forbidden(res);
     }
     
-    todo.content  = req.body.content
-    todo.updated_at = Date.now()
+    todo.content  = req.body.content;
+    todo.updated_at = Date.now();
     todo.save(function(err, todo, count) {
-      if ( err ) { return next(err) }
+      if ( err ) { return next(err); }
       
-      res.redirect('/')
-    })
-  })
-}
+      res.redirect('/');
+    });
+  });
+};
 
 // ** express turns the cookie key to lowercase **
 exports.current_user = function(req, res, next) {
   if (!req.cookies.user_id) {
-    res.cookie('user_id', utils.uid(32))
+    res.cookie('user_id', utils.uid(32));
   }
-  next()
-}
+  next();
+};
